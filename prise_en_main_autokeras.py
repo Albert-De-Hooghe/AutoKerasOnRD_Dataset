@@ -6,21 +6,42 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 import autokeras as ak
+from tensorflow.python.client import device_lib
+from readRD_dataset import RD_Dataset_train_5_classes, RD_Dataset_valid_5_classes
+device_name = [x.name for x in device_lib.list_local_devices() if x.device_type == 'GPU']
+
+print("device name is :", device_name)
+
+taille = "search"
+
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
-print(x_train.shape)
-print(y_train.shape)
-print(y_train[:3])
+x_valid_RD, y_valid_RD = RD_Dataset_valid_5_classes(taille)
+x_train_RD, y_train_RD = RD_Dataset_train_5_classes(taille)
+# print("size is:", x_train_RD.shape)
+# print("size is:", y_train_RD.shape)
+#
+# print(y_train_RD)
+# print(x_train.shape)
+#
+# print(x_train_RD[0])
+# print(y_train.shape)
 
-print(y_train[1:15])
 
-clf = ak.ImageClassifier(overwrite = True, max_trials=1)
+#print(x_test_RD[0])
+#print(x_test[0])
 
-clf.fit(x_train, y_train, epochs=10)
+clf = ak.ImageClassifier(num_classes=5, overwrite=True, max_trials=100, tuner='bayesian', project_name='test_number_2')
 
-predicted_y = clf.predict(test)
-print(predicted_y)
+clf.fit(x_train_RD,y_train_RD, epochs=10, validation_data=(x_valid_RD, y_valid_RD))
 
-print(clf.evaluate(x_test, y_test))## j'ai stoppé car ça fait trop chauffer le mon zenbook.
+
+
+clf.export_model()
+
+#predicted_y = clf.predict(x_test_RD)
+#print(predicted_y)
+
+#print(clf.evaluate(x_test_RD,y_test_RD))
 
 
