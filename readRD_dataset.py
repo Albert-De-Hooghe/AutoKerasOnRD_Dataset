@@ -47,7 +47,7 @@ def returnListOfClassesOnValidation():## dans le search on veut savoir combien d
             elif train_csv.level[i] == 4:
                 compteur_4 += 1
             else:
-                print("what ??")
+                print("what ?? problem in readRD_dataset.py")
     return [compteur_0, compteur_1, compteur_2, compteur_3, compteur_4]
 
 def returnListOfClassesOnTrain():## dans le search on veut savoir combien de classes 0 on été envoyé
@@ -74,7 +74,7 @@ def returnListOfClassesOnTrain():## dans le search on veut savoir combien de cla
             elif train_csv.level[i] == 4:
                 compteur_4 += 1
             else:
-                print("what ??")
+                print("what ?? problem in readRD_dataset.py")
     return [compteur_0, compteur_1, compteur_2, compteur_3, compteur_4]
 
 def RD_Dataset_train_binary_classif(taille):
@@ -238,6 +238,8 @@ def RD_Dataset_valid_5_classes(taille):
             list1.append(getImagefromImagePath(path_of_image_folder + '/' + str(train_csv.image[i]) + '.png'))
             list2.append(train_csv.level[i])
 
+
+
     # function that return the list of (image, labels) from the path of the folder (image in the tensor format)
 
     # list_image_name = os.listdir(path_of_image_folder)
@@ -304,8 +306,8 @@ def zeroOrOneForTheLabel(entry):
     else:
         return 0
 
-def getLabelfromImageName(): ## fonctionne que pour les données de train
-    train_csv = pd.read_csv('trainLabels.csv')
+# def getLabelfromImageName(): ## fonctionne que pour les données de train
+#     train_csv = pd.read_csv('trainLabels.csv')
 
 def getImagefromImagePath(image_path):
     # transform1 = transforms.PILToTensor()
